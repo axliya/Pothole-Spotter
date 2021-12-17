@@ -255,7 +255,7 @@ app.get('*', (req, res) => {
   res.render('404');
 });
 
-app.listen(process.env.SERVER_PORT || 8080, () => {
+app.listen(process.env.PORT || 8080, () => {
   if (!fs.existsSync('uploads')) fs.mkdirSync('uploads');
   console.log(`${chalk.greenBright('[SERVER]')} Started listening on *:${process.env.SERVER_PORT || 8080}`);
 });
