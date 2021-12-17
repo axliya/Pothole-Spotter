@@ -1,0 +1,203 @@
+<%- include('partials/head.ejs') %> 
+    <body>
+        <!-- Page Container -->
+        <!--
+            Available classes for #page-container:
+
+        GENERIC
+
+            'enable-cookies'                            Remembers active color theme between pages (when set through color theme helper Template._uiHandleTheme())
+
+        SIDEBAR & SIDE OVERLAY
+
+            'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
+            'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
+            'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
+            'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
+            'sidebar-dark'                              Dark themed sidebar
+
+            'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
+            'side-overlay-o'                            Visible Side Overlay by default
+
+            'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
+
+            'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
+
+        HEADER
+
+            ''                                          Static Header if no class is added
+            'page-header-fixed'                         Fixed Header
+
+        HEADER STYLE
+
+            ''                                          Light themed Header
+            'page-header-dark'                          Dark themed Header
+
+        MAIN CONTENT LAYOUT
+
+            ''                                          Full width Main Content if no class is added
+            'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
+            'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
+        -->
+        <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+
+            <!-- END Side Overlay -->
+
+            <!-- Sidebar -->
+            <!--
+                Sidebar Mini Mode - Display Helper classes
+
+                Adding 'smini-hide' class to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
+                Adding 'smini-show' class to an element will make it visible (opacity: 1) when the sidebar is in mini mode
+                    If you would like to disable the transition animation, make sure to also add the 'no-transition' class to your element
+
+                Adding 'smini-hidden' to an element will hide it when the sidebar is in mini mode
+                Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
+                Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
+            -->
+            <%- include('partials/sidebar') %>
+            
+            <%- include('partials/header') %>
+
+
+
+            <!-- Main Container -->
+            <main id="main-container">
+                <!-- Hero Content -->
+                <div class="bg-primary-dark">
+                    <div class="content content-full overflow-hidden">
+                        <div class="mt-7 mb-5 text-center">
+                            <h1 class="h2 text-white mb-2 invisible" data-toggle="appear" data-class="animated fadeInDown">Submit Report.</h1>
+                            <h2 class="h4 font-w400 text-white-75 invisible" data-toggle="appear" data-class="animated fadeInDown"></h2>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Hero Content -->
+
+                <!-- Page Content -->
+                <div class="bg-white">
+                    <div class="content">
+                        <div class="row items-push justify-content-center">
+                            <div class="col-md-10 col-xl-5">
+                                <form action="/upload" method="POST" enctype="multipart/form-data">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="formlatitude">Coordinates</label>
+                                                <input type="text" class="form-control" id="formlatitude" name="formlatitude" placeholder="Latitude">
+                                                <br>
+                                                <input type="text" class="form-control" id="formlongitude" name="formlongitude" placeholder="Longitude">
+                                                <br>
+                                                <a class="btn btn-alt-primary" onclick="requestCoords()">
+                                                    Request Coords
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="corp">Municipal Corporation</label>
+                                                <br>
+                                                <select class="form-control" name="corp" id="corp">
+                                                    <option value="Port Of Spain City Corporation">Port Of Spain City Corporation</option>
+                                                    <option value="San Fernando City Corporation">San Fernando City Corporation</option>
+                                                    <option value="Arima Borough Corporation">Arima Borough Corporation</option>
+                                                    <option value="Tunapuna/ Piarco Regional Corporation">Tunapuna/ Piarco Regional Corporation</option>
+                                                    <option value="Sangre Grande Regional Corporation">Sangre Grande Regional Corporation</option>
+                                                    <option value="Couva/ Tabaquite/ Talparo Regional Corporation">Couva/ Tabaquite/ Talparo Regional Corporation</option>
+                                                    <option value="Point Fortin Borough Corporation">Point Fortin Borough Corporation</option>
+                                                    <option value="Penal Debe Regional Corporation">Penal Debe Regional Corporation</option>
+                                                    <option value="Diego Martin Regional Corporation">Diego Martin Regional Corporation</option>
+                                                    <option value="Chaguanas Borough Corporation">Chaguanas Borough Corporation</option>
+                                                    <option value="Siparia Regional Corporation">Siparia Regional Corporation</option>
+                                                    <option value="Mayaro/ Rio Claro Regional Corporation">Mayaro/ Rio Claro Regional Corporation</option>
+                                                    <option value="San Juan/ Laventille Regional Corporation">San Juan/ Laventille Regional Corporation</option>
+                                                    <option value="Princes Town Regional Corporation">Princes Town Regional Corporation</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="fileupload">Image Upload</label>
+                                                <br>
+                                                <input type="file" name="fileupload" id="fileupload">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-alt-primary">
+                                            <i class="fa fa-paper-plane mr-1"></i> Submit Report
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END Page Content -->
+
+                <!-- Maps and Search functionality is initialized in js/pages/be_pages_generic_contact.min.js which was auto compiled from _js/pages/be_comp_maps_google.js -->
+                <!-- For more info and examples you can check out https://hpneo.github.io/gmaps/ -->
+                <div class="bg-white" id="js-map-contact" style="height: 500px;"></div>
+            </main>
+            <!-- END Main Container -->
+        </div>
+        <!-- END Page Container -->
+
+        <!--
+            OneUI JS Core
+
+            Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
+            to handle those dependencies through webpack. Please check out assets/_js/main/bootstrap.js for more info.
+
+            If you like, you could also include them separately directly from the assets/js/core folder in the following
+            order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
+
+            assets/js/core/jquery.min.js
+            assets/js/core/bootstrap.bundle.min.js
+            assets/js/core/simplebar.min.js
+            assets/js/core/jquery-scrollLock.min.js
+            assets/js/core/jquery.appear.min.js
+            assets/js/core/js.cookie.min.js
+        -->
+        <script src="assets/js/oneui.core.min.js"></script>
+
+        <!--
+            OneUI JS
+
+            Custom functionality including Blocks/Layout API as well as other vital and optional helpers
+            webpack is putting everything together at assets/_js/main/app.js
+        -->
+        <script src="assets/js/oneui.app.min.js"></script>
+
+        <!-- Page JS Plugins -->
+        <!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
+        <!-- For more info please have a look at https://developers.google.com/maps/documentation/javascript/get-api-key#key -->
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDGW17aq5LhvKJYHu6E-lqZZPqJHrGYMSU"></script>
+        <script src="assets/js/plugins/gmaps/gmaps.min.js"></script>
+
+        <!-- Page JS Code -->
+        <script src="assets/_js/pages/be_pages_generic_contact.js"></script>
+
+        <script>
+            function requestCoords() {
+                navigator.geolocation.getCurrentPosition(position => {
+                    $('#formlatitude').val(position.coords.latitude);
+                    $('#formlongitude').val(position.coords.longitude);
+                });
+            }
+
+            // function submitReport() {
+            //     let formdata = new FormData();
+            //     formdata.append('lat', $('#form-latitude').val());
+            //     formdata.append('lon', $('#form-longitude').val());
+            //     formdata.append('image', $('#fileupload').prop('files'));
+
+            //     $.ajax({
+            //         url: '/upload',
+            //         type: 'POST',
+            //         data: formdata,
+            //     }).done(res => console.log(res));
+            // }
+        </script>
+    </body>
+</html>
