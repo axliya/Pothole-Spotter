@@ -1,0 +1,173 @@
+<%- include('partials/head.ejs') %> 
+    <body>
+        <!-- Page Container -->
+        <!--
+            Available classes for #page-container:
+
+        GENERIC
+
+            'enable-cookies'                            Remembers active color theme between pages (when set through color theme helper Template._uiHandleTheme())
+
+        SIDEBAR & SIDE OVERLAY
+
+            'sidebar-r'                                 Right Sidebar and left Side Overlay (default is left Sidebar and right Side Overlay)
+            'sidebar-mini'                              Mini hoverable Sidebar (screen width > 991px)
+            'sidebar-o'                                 Visible Sidebar by default (screen width > 991px)
+            'sidebar-o-xs'                              Visible Sidebar by default (screen width < 992px)
+            'sidebar-dark'                              Dark themed sidebar
+
+            'side-overlay-hover'                        Hoverable Side Overlay (screen width > 991px)
+            'side-overlay-o'                            Visible Side Overlay by default
+
+            'enable-page-overlay'                       Enables a visible clickable Page Overlay (closes Side Overlay on click) when Side Overlay opens
+
+            'side-scroll'                               Enables custom scrolling on Sidebar and Side Overlay instead of native scrolling (screen width > 991px)
+
+        HEADER
+
+            ''                                          Static Header if no class is added
+            'page-header-fixed'                         Fixed Header
+
+        HEADER STYLE
+
+            ''                                          Light themed Header
+            'page-header-dark'                          Dark themed Header
+
+        MAIN CONTENT LAYOUT
+
+            ''                                          Full width Main Content if no class is added
+            'main-content-boxed'                        Full width Main Content with a specific maximum width (screen width > 1200px)
+            'main-content-narrow'                       Full width Main Content with a percentage width (screen width > 1200px)
+        -->
+        <div id="page-container" class="sidebar-o sidebar-dark enable-page-overlay side-scroll page-header-fixed main-content-narrow">
+
+            <!-- END Side Overlay -->
+
+            <!-- Sidebar -->
+            <!--
+                Sidebar Mini Mode - Display Helper classes
+
+                Adding 'smini-hide' class to an element will make it invisible (opacity: 0) when the sidebar is in mini mode
+                Adding 'smini-show' class to an element will make it visible (opacity: 1) when the sidebar is in mini mode
+                    If you would like to disable the transition animation, make sure to also add the 'no-transition' class to your element
+
+                Adding 'smini-hidden' to an element will hide it when the sidebar is in mini mode
+                Adding 'smini-visible' to an element will show it (display: inline-block) only when the sidebar is in mini mode
+                Adding 'smini-visible-block' to an element will show it (display: block) only when the sidebar is in mini mode
+            -->
+            <%- include('partials/sidebar') %>
+            
+            <%- include('partials/header') %>
+
+
+
+            <!-- Main Container -->
+            <main id="main-container">
+                <div class="bg-body-light">
+                    <div class="content content-full">
+                        <div class="d-flex flex-column flex-sm-row justify-content-sm-between align-items-sm-center py-2 text-center text-sm-left">
+                            <div class="flex-sm-fill">
+                                <h1 class="h3 font-w700 mb-2">
+                                    Leaderboard
+                                </h1>
+                                <h2 class="h6 font-w500 text-muted mb-0">
+                                    Ranking the municipal corporations.
+                                </h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+
+                <div class="block-content">
+                    <!-- Recent Orders Table -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless table-striped table-vcenter">
+                            <thead>
+                                <tr>
+                                    <th class="text-center" style="width: 120px;">Corporation</th>
+                                    <th class="d-none d-sm-table-cell">Total Potholes</th>
+                                    <th class="d-none d-sm-table-cell">Fixed Potholes</th>
+                                    <th class="d-none d-sm-table-cell">Percentage Fixed</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% if(corps){ %>
+                                      <% Object.keys(corps).forEach(key => { %>
+                                        <tr>
+                                          <td class="d-none d-sm-table-cell font-size-sm font-w600"><%- key %></td>
+                                          <td class="d-none d-sm-table-cell font-size-sm font-w600"><%- corps[key].length %></td>
+                                          <td class="d-none d-sm-table-cell font-size-sm font-w600"><%- corps[key].reduce((prev, curr) => prev + curr.status, 0) %></td>
+                                          <td class="d-none d-sm-table-cell font-size-sm font-w600"><%- corps[key].reduce((prev, curr) => prev + curr.status, 0)/corps[key].length * 100 %>%</td>
+                                        </tr>
+                                      <% }) %>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- END Recent Orders Table -->
+                </div>
+                </div>
+            </main>
+            <!-- END Main Container -->
+        </div>
+        <!-- END Page Container -->
+
+        <!--
+            OneUI JS Core
+
+            Vital libraries and plugins used in all pages. You can choose to not include this file if you would like
+            to handle those dependencies through webpack. Please check out assets/_js/main/bootstrap.js for more info.
+
+            If you like, you could also include them separately directly from the assets/js/core folder in the following
+            order. That can come in handy if you would like to include a few of them (eg jQuery) from a CDN.
+
+            assets/js/core/jquery.min.js
+            assets/js/core/bootstrap.bundle.min.js
+            assets/js/core/simplebar.min.js
+            assets/js/core/jquery-scrollLock.min.js
+            assets/js/core/jquery.appear.min.js
+            assets/js/core/js.cookie.min.js
+        -->
+        <script src="assets/js/oneui.core.min.js"></script>
+
+        <!--
+            OneUI JS
+
+            Custom functionality including Blocks/Layout API as well as other vital and optional helpers
+            webpack is putting everything together at assets/_js/main/app.js
+        -->
+        <script src="assets/js/oneui.app.min.js"></script>
+
+        <!-- Page JS Plugins -->
+        <!-- Google Maps API Key (you will have to obtain a Google Maps API key to use Google Maps) -->
+        <!-- For more info please have a look at https://developers.google.com/maps/documentation/javascript/get-api-key#key -->
+        <script src="https://maps.googleapis.com/maps/api/js?key="></script>
+        <script src="assets/js/plugins/gmaps/gmaps.min.js"></script>
+
+        <!-- Page JS Code -->
+        <script src="assets/js/pages/be_pages_generic_contact.min.js"></script>
+
+        <script>
+            function requestCoords() {
+                navigator.geolocation.getCurrentPosition(position => {
+                    $('#formlatitude').val(position.coords.latitude);
+                    $('#formlongitude').val(position.coords.longitude);
+                });
+            }
+
+            // function submitReport() {
+            //     let formdata = new FormData();
+            //     formdata.append('lat', $('#form-latitude').val());
+            //     formdata.append('lon', $('#form-longitude').val());
+            //     formdata.append('image', $('#fileupload').prop('files'));
+
+            //     $.ajax({
+            //         url: '/upload',
+            //         type: 'POST',
+            //         data: formdata,
+            //     }).done(res => console.log(res));
+            // }
+        </script>
+    </body>
+</html>
